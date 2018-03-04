@@ -1,6 +1,12 @@
 
 const options=["Option one","Option two","Option three","Option four","Option five"]
-
+const obj={
+    name:"jobayer",
+    getName(){
+        return this.name;
+    }
+}
+console.log(obj.getName());
 class IndecisionApp extends React.Component{
     render(){
         return (
@@ -38,16 +44,14 @@ class Action extends React.Component{
 }
 
 class Options extends React.Component{
-    handleRemoveAll(){
-        alert("Ouch!!s");
-    }
+   
     render(){
         return(
            
             <div>
                 <h3>Options below</h3>
-                <Option/>
-                <button onClick={this.handleRemoveAll}>Remove all</button>
+                <Option data={options}/>
+               
                 <hr/>
             </div>
         )
@@ -55,11 +59,23 @@ class Options extends React.Component{
 }
 
 class Option extends React.Component{
+   
+    constructor(props){
+        super(props);
+        this.handleRemoveAll=this.handleRemoveAll.bind(this);
+        console.log(this.props);
+    }
+    handleRemoveAll(){
+        alert(this.props.data);
+    }
     render(){
         return(
-            <ul>
-                {options.map(x=><li key={x.toString()}>{x}</li>)}
-           </ul>
+            <div>
+                <ul>
+                    {this.props.data.map(x=><li key={x.toString()}>{x}</li>)}
+                </ul>
+                <button onClick={this.handleRemoveAll}>Remove all</button>
+           </div>
         );
     }
 }

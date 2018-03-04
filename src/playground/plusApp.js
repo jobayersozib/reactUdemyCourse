@@ -21,23 +21,71 @@
 
 // ReactDOM.render(templateTwo,appRoot);
 
-let count=0;
+// let count=0;
 
 
-const addOne=()=>{
-    count++;
-    renderCounter();
- }
+// const addOne=()=>{
+//     count++;
+//     renderCounter();
+//  }
 
- const renderCounter=()=>{
-    const templateTwo=(
-        <div>
-            <h1>Count: {count}</h1>
-            <button id="my-id" onClick={addOne} className="button">+1</button>
-        </div>
-    )
-    //console.log(templateTwo);
-    ReactDOM.render(templateTwo,document.getElementById("app"));
- }
+//  const renderCounter=()=>{
+//     const templateTwo=(
+//         <div>
+//             <h1>Count: {count}</h1>
+//             <button id="my-id" onClick={addOne} className="button">+1</button>
+//         </div>
+//     )
+//     //console.log(templateTwo);
+//     ReactDOM.render(templateTwo,document.getElementById("app"));
+//  }
 
- renderCounter();
+//  renderCounter();
+
+
+class Counter extends React.Component{
+    
+    constructor(props){
+        super(props)
+        
+        this.handleAddOne=this.handleAddOne.bind(this);
+        this.handleMinusOne=this.handleMinusOne.bind(this);
+        this.handleReset=this.handleReset.bind(this);
+        this.state={
+            count:0
+        }
+    }
+    handleAddOne(){
+        this.setState((preStates)=>{
+            return {
+                count:preStates.count+1
+            };
+        })
+    }
+    handleMinusOne(){
+        this.setState((preStates)=>{
+            return {
+                count:preStates.count-1
+            };
+        })
+    }
+    handleReset(){
+        this.setState((preStates)=>{
+            return {
+                count:0
+            };
+        })
+    }
+    render(){
+        return(
+            <div>
+                <h1>Count : {this.state.count}</h1>
+                <button onClick={this.handleAddOne}>+1</button>
+                <button onClick={this.handleMinusOne}>-1</button>
+                <button onClick={this.handleReset}>reset</button>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<Counter/>,document.getElementById("app"));
