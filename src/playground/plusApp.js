@@ -42,6 +42,16 @@
 
 //  renderCounter();
 
+class CounterToggle extends React.Component{
+    render(){
+        return (
+            <div>
+                <Counter/>
+                <Toggle/>
+            </div>
+        )
+    }
+}
 
 class Counter extends React.Component{
     
@@ -88,4 +98,32 @@ class Counter extends React.Component{
     }
 }
 
-ReactDOM.render(<Counter/>,document.getElementById("app"));
+class Toggle extends React.Component{
+    constructor(props){
+        super(props)
+        this.handleToggle=this.handleToggle.bind(this);
+        this.state={
+            display:"none",
+        }
+    }
+    handleToggle(){
+        this.setState((preState)=>{
+            let toggleValue= preState.display==="none" ? "show" : "none"
+            
+            return {
+               display:toggleValue
+            }
+        })
+    }
+    render(){
+        return(
+            <div>
+                <button onClick={this.handleToggle}>Click</button>
+                {this.state.display!=="none" && <p>Display details</p>}
+            </div>
+        )
+    }
+}
+
+
+ReactDOM.render(<CounterToggle/>,document.getElementById("app"));

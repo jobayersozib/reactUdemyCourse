@@ -50,22 +50,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 //  renderCounter();
 
+var CounterToggle = function (_React$Component) {
+    _inherits(CounterToggle, _React$Component);
 
-var Counter = function (_React$Component) {
-    _inherits(Counter, _React$Component);
+    function CounterToggle() {
+        _classCallCheck(this, CounterToggle);
+
+        return _possibleConstructorReturn(this, (CounterToggle.__proto__ || Object.getPrototypeOf(CounterToggle)).apply(this, arguments));
+    }
+
+    _createClass(CounterToggle, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(Counter, null),
+                React.createElement(Toggle, null)
+            );
+        }
+    }]);
+
+    return CounterToggle;
+}(React.Component);
+
+var Counter = function (_React$Component2) {
+    _inherits(Counter, _React$Component2);
 
     function Counter(props) {
         _classCallCheck(this, Counter);
 
-        var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
+        var _this2 = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
-        _this.handleAddOne = _this.handleAddOne.bind(_this);
-        _this.handleMinusOne = _this.handleMinusOne.bind(_this);
-        _this.handleReset = _this.handleReset.bind(_this);
-        _this.state = {
+        _this2.handleAddOne = _this2.handleAddOne.bind(_this2);
+        _this2.handleMinusOne = _this2.handleMinusOne.bind(_this2);
+        _this2.handleReset = _this2.handleReset.bind(_this2);
+        _this2.state = {
             count: 0
         };
-        return _this;
+        return _this2;
     }
 
     _createClass(Counter, [{
@@ -129,4 +152,53 @@ var Counter = function (_React$Component) {
     return Counter;
 }(React.Component);
 
-ReactDOM.render(React.createElement(Counter, null), document.getElementById("app"));
+var Toggle = function (_React$Component3) {
+    _inherits(Toggle, _React$Component3);
+
+    function Toggle(props) {
+        _classCallCheck(this, Toggle);
+
+        var _this3 = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this, props));
+
+        _this3.handleToggle = _this3.handleToggle.bind(_this3);
+        _this3.state = {
+            display: "none"
+        };
+        return _this3;
+    }
+
+    _createClass(Toggle, [{
+        key: "handleToggle",
+        value: function handleToggle() {
+            this.setState(function (preState) {
+                var toggleValue = preState.display === "none" ? "show" : "none";
+
+                return {
+                    display: toggleValue
+                };
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(
+                    "button",
+                    { onClick: this.handleToggle },
+                    "Click"
+                ),
+                this.state.display !== "none" && React.createElement(
+                    "p",
+                    null,
+                    "Display details"
+                )
+            );
+        }
+    }]);
+
+    return Toggle;
+}(React.Component);
+
+ReactDOM.render(React.createElement(CounterToggle, null), document.getElementById("app"));
