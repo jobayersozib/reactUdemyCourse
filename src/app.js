@@ -1,21 +1,31 @@
 
-const options=["Option one","Option two","Option three","Option four","Option five"]
-const obj={
-    name:"jobayer",
-    getName(){
-        return this.name;
-    }
-}
-console.log(obj.getName());
+
+
 class IndecisionApp extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            options:["Option one","Option two","Option three","Option four","Option five","Option six"]
+
+        }
+        this.handleAddOptionEvent=this.handleAddOptionEvent.bind(this);
+    }
+    handleAddOptionEvent(e){
+        e.preventDefault();
+        const value=e.target.elements[0].value;
+        this.setState((pre)=>{
+            options:pre.options.push(value);
+        })
+    }
     render(){
         return (
             <div>
                 <Header/>
                 <hr/>
-                <Action/>
+                <Action data={this.state.options} visibility={this.state.options.length>0 ? true : false}/>
                 <Options/>
-                <Addoption/>
+                <Option data={this.state.options}/>
+                <Addoption handler={this.handleAddOptionEvent}/>
             </div>
         )
     }
@@ -31,13 +41,17 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component{
+    constructor(props){
+        super(props)
+        this.handlePick=this.handlePick.bind(this);
+    }
     handlePick(){
-        alert("Ouch!!");
+        console.log(this.props.data[this.props.data.length-1]);
     }
     render(){
         return (
             <div>
-                <button onClick={this.handlePick}>What should i do ?</button>
+                <button disabled={this.props.visibility ? "":"disabled"} onClick={this.handlePick}>What should i do ?{this.props.visibility}</button>
             </div>
         )
     }
@@ -50,7 +64,7 @@ class Options extends React.Component{
            
             <div>
                 <h3>Options below</h3>
-                <Option data={options}/>
+               
                
                 <hr/>
             </div>
@@ -63,16 +77,17 @@ class Option extends React.Component{
     constructor(props){
         super(props);
         this.handleRemoveAll=this.handleRemoveAll.bind(this);
-        console.log(this.props);
+        //console.log(this.props);
     }
-    handleRemoveAll(){
-        alert(this.props.data);
+    handleRemoveAll(e){
+        e.preventDefault()
+       console.log(e.target.textContent);
     }
     render(){
         return(
             <div>
                 <ul>
-                    {this.props.data.map(x=><li key={x.toString()}>{x}</li>)}
+                    {this.props.data.map(x=><li onClick={this.handleRemoveAll} key={x.toString()}>{x}</li>)}
                 </ul>
                 <button onClick={this.handleRemoveAll}>Remove all</button>
            </div>
@@ -81,17 +96,24 @@ class Option extends React.Component{
 }
 
 class Addoption extends React.Component{
+    constructor(props){
+        super(props)
+        this.handleAddOption=this.handleAddOption.bind(this);
+       
+        
+    }
     handleAddOption(e){
       e.preventDefault();
       if(e.target.elements.addOption.value.length>0){
         alert(e.target.elements.addOption.value)
       }
-       
+      
+     
     }
     render(){
         return(
             <div>
-                <form id="add-action" onSubmit={this.handleAddOption}>
+                <form id="add-action" onSubmit={this.props.handler}>
                     <input type="text" name="addOption" placeholder="Enter your option"/>
                     <button>Add action</button>
                 </form>
