@@ -5,10 +5,19 @@ class IndecisionApp extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            options:["Option one","Option two","Option three","Option four","Option five","Option six"]
+            options:[]
 
         }
         this.handleAddOptionEvent=this.handleAddOptionEvent.bind(this);
+        this.handleRemoveOption=this.handleRemoveOption.bind(this);
+    }
+    handleRemoveOption(e){
+        e.preventDefault();
+        const tId=e.target.getAttribute("id");
+        this.setState((pre)=>{
+            options:delete pre.options[tId];
+        })
+        console.log(e.target.getAttribute("id"));
     }
     handleAddOptionEvent(e){
         e.preventDefault();
@@ -20,25 +29,37 @@ class IndecisionApp extends React.Component{
     render(){
         return (
             <div>
-                <Header/>
+                <Header title="Title here" subTitle="Put your life in the hands of a computer (sub)"/>
                 <hr/>
                 <Action data={this.state.options} visibility={this.state.options.length>0 ? true : false}/>
                 <Options/>
-                <Option data={this.state.options}/>
+                <Option data={this.state.options} handleRemove={this.handleRemoveOption}/>
                 <Addoption handler={this.handleAddOptionEvent}/>
             </div>
         )
     }
 }
 
-class Header extends React.Component {
-    render(){
-        return(<div>
-                <h1>Indecision</h1>
-                <h2>Put your life in the hands of a computer</h2>
-            </div>)
-    }
+const Header=(props)=>{
+    return(
+        <div>
+            <h1>{props.title}</h1>
+            <h2>{props.subTitle}</h2>
+        </div>
+    )
 }
+Header.defaultProps={
+    title:"Indecision",
+    subTitle:"Put your life in the hands of a computer"
+}
+// class Header extends React.Component {
+//     render(){
+//         return(<div>
+//                 <h1>Indecision</h1>
+//                 <h2>Put your life in the hands of a computer</h2>
+//             </div>)
+//     }
+// }
 
 class Action extends React.Component{
     constructor(props){
@@ -87,7 +108,10 @@ class Option extends React.Component{
         return(
             <div>
                 <ul>
-                    {this.props.data.map(x=><li onClick={this.handleRemoveAll} key={x.toString()}>{x}</li>)}
+                    {this.props.data.map((x,index)=>{
+                       return <li onClick={this.handleRemoveAll} id={index} key={index}>{x}-----<a id={index} onClick={this.props.handleRemove} href="#">Remove</a></li>
+                    })
+                }
                 </ul>
                 <button onClick={this.handleRemoveAll}>Remove all</button>
            </div>
@@ -123,5 +147,13 @@ class Addoption extends React.Component{
     }
 }
 
+const User=(props)=>{
+    return(
+        <div>
+            <p>Name: {props.name}</p>
+            <p>Age: {props.age}</p>
+        </div>
+    )
+}
 
 ReactDOM.render(<IndecisionApp/>,document.getElementById("app"));

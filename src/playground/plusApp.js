@@ -46,7 +46,7 @@ class CounterToggle extends React.Component{
     render(){
         return (
             <div>
-                <Counter/>
+                <Counter count={5}/>
                 <Toggle/>
             </div>
         )
@@ -62,7 +62,7 @@ class Counter extends React.Component{
         this.handleMinusOne=this.handleMinusOne.bind(this);
         this.handleReset=this.handleReset.bind(this);
         this.state={
-            count:0
+            count:this.props.count
         }
     }
     handleAddOne(){
@@ -96,6 +96,10 @@ class Counter extends React.Component{
             </div>
         )
     }
+}
+
+Counter.defaultProps={
+    count:10
 }
 
 class Toggle extends React.Component{
