@@ -1,15 +1,41 @@
 
-
-
+import React from 'react'
+import ReactDOm from 'react-dom'
+import Modal from 'react-modal';
+import './styles/style.scss'
+import 'normalize.css/normalize.css'
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 class IndecisionApp extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            options:[]
+            options:[],
+            visibility:true
 
         }
         this.handleAddOptionEvent=this.handleAddOptionEvent.bind(this);
         this.handleRemoveOption=this.handleRemoveOption.bind(this);
+        this.handleModalVisibility=this.handleModalVisibility.bind(this);
+    }
+
+    handleModalVisibility(e){
+        this.setState(()=>({
+            visibility:false
+        })
+        
+    );
+
+        console.log(this.state.visibility)
+       
     }
     handleRemoveOption(e){
         e.preventDefault();
@@ -35,12 +61,22 @@ class IndecisionApp extends React.Component{
                 <Options/>
                 <Option data={this.state.options} handleRemove={this.handleRemoveOption}/>
                 <Addoption handler={this.handleAddOptionEvent}/>
+                <Modal isOpen={this.state.visibility}
+                       style={customStyles}
+                       contentLabel="Example Modal">
+                       <div>
+                        <h3>Hellow there</h3>
+                        <p>Some text here</p>
+                        <button onClick={this.handleModalVisibility}>Close</button>
+                       </div>
+                </Modal>       
             </div>
         )
     }
 }
 
 const Header=(props)=>{
+    
     return(
         <div>
             <h1>{props.title}</h1>
@@ -94,8 +130,7 @@ class Options extends React.Component{
 }
 
 class Option extends React.Component{
-   
-    constructor(props){
+   constructor(props){
         super(props);
         this.handleRemoveAll=this.handleRemoveAll.bind(this);
         //console.log(this.props);
@@ -157,3 +192,18 @@ const User=(props)=>{
 }
 
 ReactDOM.render(<IndecisionApp/>,document.getElementById("app"));
+
+class OldSyntax{
+    constructor(){
+        this.name='mike'
+    }
+}
+const obj=new OldSyntax()
+
+console.log(obj);
+
+class NewSyatax{
+    name="jobayer"
+}
+
+console.log(new NewSyatax())
