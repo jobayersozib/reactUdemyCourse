@@ -1,5 +1,7 @@
 import {createStore , combineReducers} from 'redux';
-import uuid from 'uuid'
+import uuid from 'uuid';
+import { addExpense ,removeExpense} from '../actions/expenses';
+
 
 // const store=createStore((state={count:10})=>{
 //     return state;
@@ -9,32 +11,6 @@ import uuid from 'uuid'
 
 //ADD_EXPENSE
 
-const addExpense=({description='',note='',amount='',createdAt=0}={})=>{
-    return (
-        {
-            type:"ADD_EXPENSE",
-            expense:{
-                id:uuid(),
-                description,
-                note,
-                amount,
-                createdAt
-            }
-        }
-    )
-}
-
-//REMOVE_EXPENSE
-
-
-const removeExpense=(id)=>{
-    return(
-        {
-            type:"REMOVE_EXPENSE",
-            id:id
-        }
-    )
-}
 
 //EDIT_EXPENSE
 //SET_TEXT_FILTER
@@ -70,14 +46,14 @@ const filterReducer=(state=filters,action)=>{
     }
 }
 
-const store=createStore(combineReducers({
+export const store=createStore(combineReducers({
     expenses:expenseReducer,
     filters:filterReducer
 }))
 
 console.log(store.getState());
 store.subscribe(()=>{
-    console.log(store.getState())
+    //console.log(store.getState())
 })
 
 store.dispatch(addExpense({description:"some description ",note:"Some note",amount:300}))

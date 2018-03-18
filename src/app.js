@@ -3,6 +3,8 @@
 import Modal from 'react-modal';
 import './styles/style.scss'
 import 'normalize.css/normalize.css'
+import {store} from '../src/playground/redux'
+import {addExpense} from '../src/actions/expenses'
 import { BrowserRouter , Route} from 'react-router-dom'
 
 const ExpenseDashBoardPage=()=>{
@@ -31,4 +33,7 @@ const routes=(
         </BrowserRouter>
 )
 
+store.dispatch(addExpense({description:"Description after refactoring",note:"Some note after refactoring",amount:1000}));
+
+console.log(store.getState())
 ReactDOM.render(routes,document.getElementById("app"));
