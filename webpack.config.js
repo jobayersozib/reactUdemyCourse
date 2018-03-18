@@ -1,7 +1,7 @@
 const path=require("path");
 
 module.exports={
-    entry: "./src/app.js",
+    entry: "./src/playground/redux.js",
     output:{
         path:path.join(__dirname,"public"),
         filename:"bundle.js"
@@ -35,6 +35,7 @@ module.exports={
       devServer: {
         contentBase: path.join(__dirname, "public"),
         compress: true,
+        historyApiFallback:true,
         port: 9000
       }
       
